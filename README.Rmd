@@ -1,1 +1,17 @@
+---
+title: "TIF Data Iowa visualization"
+author: "Vaishnavi Devi Kondabathini"
+date: "2026-01-09" 
+output:
+  md_document:
+    variant: gfm
+output_file: "README.md"
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(maps)
+library(tidyverse)
+library(dplyr)
+```
