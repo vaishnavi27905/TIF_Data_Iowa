@@ -14,7 +14,60 @@ library(ggplot2)
 library(maps)
 library(tidyverse)
 library(dplyr)
+library(scales)
 ```
 
+Here, I am using creating csv data file for the Tax increament finance (TIF)
 
-here I need to update
+```{r}
+# Load the correct library for Excel files
+library(readxl)
+library(readr)
+
+# Use read_excel instead of read_csv for .xlsx files
+TIF_data_Iowa <- read_excel("C:/Users/vaish/Downloads/TIF data Iowa.xlsx")
+
+# Now it should show the data table as separate page
+View(TIF_data_Iowa)
+
+
+summary(TIF_data_Iowa)
+
+#colnames(TIF_data_Iowa)
+
+#names(TIF_data_Iowa)
+
+#dim(TIF_data_Iowa)
+
+#head(TIF_data_Iowa)
+
+#glimpse(TIF_data_Iowa)
+```
+
+here I have made graph for Assessment Year, Estimated Revenue ($ Millions) which can readable and understandable.
+
+```{r}
+
+# Use the data frame you already created (tif_plot_data)
+# We add a quick filter to ensure year_num is clean
+final_plot_data <- tif_plot_data %>%
+  filter(!is.na(year_num))
+
+# Create the Line Chart
+ggplot(final_plot_data, aes(x = year_num, y = rev_num)) +
+  geom_line(color = "#2c3e50", linewidth = 1.2) + 
+  geom_point(color = "#e74c3c", size = 3) +
+  theme_minimal() +
+  # This makes the Y-axis show "$100M" etc.
+  scale_y_continuous(labels = label_dollar()) + 
+  # This ensures every second year is labeled correctly
+  scale_x_continuous(breaks = seq(2000, 2021, by = 2)) + 
+  labs(
+    title = "Projected TIF Revenues Over Time",
+    subtitle = "Iowa Urban Renewal Analysis (2000-2021)",
+    x = "Assessment Year",
+    y = "Estimated Revenue ($ Millions)",
+    caption = "Source: TIF data Iowa"
+  ) +
+  theme(plot.title = element_text(face = "bold", size = 14))
+```
