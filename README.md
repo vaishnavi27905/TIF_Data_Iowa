@@ -71,11 +71,10 @@ Millions) which can readable and understandable.
 
 ``` r
 final_plot_data <- TIF_data_Iowa %>%
-  filter(!is.na(...1),
-         !is.na(`Estimated TIF Revenues ($ Millions)`))
+  filter(!is.na(...1))
 
 ggplot(final_plot_data,
-       aes(x = suppressWarnings(as.numeric(...1)),
+       aes(x = as.numeric(...1),
            y = `Estimated TIF Revenues ($ Millions)`)) +
   geom_line(color = "#2c3e50", linewidth = 1.2) +
   geom_point(color = "#e74c3c", size = 3) +
@@ -91,5 +90,14 @@ ggplot(final_plot_data,
   ) +
   theme(plot.title = element_text(face = "bold", size = 14))
 ```
+
+    ## Warning in FUN(X[[i]], ...): NAs introduced by coercion
+    ## Warning in FUN(X[[i]], ...): NAs introduced by coercion
+
+    ## Warning: Removed 1 row containing missing values or values outside the scale range
+    ## (`geom_line()`).
+
+    ## Warning: Removed 1 row containing missing values or values outside the scale range
+    ## (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->

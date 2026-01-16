@@ -47,11 +47,10 @@ here I have made graph for Assessment Year, Estimated Revenue ($ Millions) which
 
 ```{r}
 final_plot_data <- TIF_data_Iowa %>%
-  filter(!is.na(...1),
-         !is.na(`Estimated TIF Revenues ($ Millions)`))
+  filter(!is.na(...1))
 
 ggplot(final_plot_data,
-       aes(x = suppressWarnings(as.numeric(...1)),
+       aes(x = as.numeric(...1),
            y = `Estimated TIF Revenues ($ Millions)`)) +
   geom_line(color = "#2c3e50", linewidth = 1.2) +
   geom_point(color = "#e74c3c", size = 3) +
