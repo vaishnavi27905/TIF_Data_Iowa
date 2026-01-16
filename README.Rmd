@@ -66,3 +66,52 @@ ggplot(final_plot_data,
   ) +
   theme(plot.title = element_text(face = "bold", size = 14))
 ```
+
+can you create the base year graph by compare with each year.
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+```
+
+The above graph is count and TIF Estimated Revenues ($ Millions) with bar graph.
+
+```{r}
+# 1. Prepare the dataset (Data sourced from provided tables)
+tif_data <- data.frame(
+  Year = 1981:2021,
+  Count = c(1, 3, 4, 3, 10, 11, 22, 37, 40, 40, 26, 56, 80, 39, 17, 19, 13, 9, 29, 34, 
+            38, 70, 46, 38, 35, 46, 56, 56, 53, 76, 65, 87, 72, 71, 88, 81, 102, 107, 109, 89, 8),
+  Revenue = c(0.1, 11.7, 2.5, 0.5, 2.6, 5.3, 12.9, 26.9, 19.9, 11.1, 11.2, 28.1, 23.1, 6.1, 1.4, 
+              4.2, 4.4, 5.3, 15.3, 14.8, 3.6, 14.9, 6.2, 6.1, 4.0, 10.2, 10.1, 9.6, 7.7, 6.0, 
+              5.6, 13.8, 11.6, 11.1, 14.9, 15.1, 13.0, 20.0, 9.0, 2.1, 0.02)
+)
+
+# 2. Define the scaling factor for the second axis
+# Since Count goes up to ~110 and Revenue to ~30, we multiply Revenue by 4 to align them
+scale_factor <- 4
+
+# 3. Create the Dual-Axis Visualization
+ggplot(tif_data, aes(x = Year)) +
+  # Bar chart for Project Count (Primary Axis)
+  geom_bar(aes(y = Count), stat = "identity", fill = "#3498db", alpha = 0.3) +
+  # Line chart for TIF Revenue (Scaled to fit the Primary Axis)
+  geom_line(aes(y = Revenue * scale_factor), color = "#e74c3c", size = 1) +
+  # Formatting the axes
+  scale_y_continuous(
+    name = "Count",
+    sec.axis = sec_axis(~./scale_factor, name = "TIF Estimated Revenues ($ Millions)")
+  ) +
+  theme_minimal() +
+  labs(
+    title = "Project Count vs. TIF Revenue (1981-2021)",
+    x = "Year"
+  ) +
+  theme(
+    axis.title.y = element_text(color = "#3498db", face = "bold"),
+    axis.title.y.right = element_text(color = "#e74c3c", face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
