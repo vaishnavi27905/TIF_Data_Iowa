@@ -105,6 +105,67 @@ ggplot(final_plot_data,
 can you create the base year graph by compare with each year.
 
 ``` r
+# Load the tidyverse library for data manipulation and clean tables
+library(tidyverse)
+
+# Create the data frame based on the provided images
+tif_table <- tibble(
+  Base_Year = c(
+    "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990",
+    "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000",
+    "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010",
+    "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020*", "2021*"
+  ),
+  Count = c(
+    1, 3, 4, 3, 10, 11, 22, 37, 40, 40, 26, 56, 80, 39, 17, 19, 13, 9, 29, 34,
+    38, 70, 46, 38, 35, 46, 56, 56, 53, 76, 65, 87, 72, 71, 88, 81, 102, 107, 109, 89, 8
+  ),
+  Frozen_Base_Valuation_Millions = c(
+    1.80, 123.00, 42.40, 20.20, 57.30, 40.90, 258.80, 446.60, 271.20, 327.70,
+    162.40, 489.60, 532.50, 213.30, 53.40, 213.80, 100.30, 173.10, 803.20, 215.90,
+    96.30, 577.00, 191.50, 297.60, 158.10, 390.80, 339.50, 146.20, 394.70, 654.40,
+    536.50, 147.80, 209.10, 504.10, 449.90, 1228.80, 629.50, 405.60, 127.00, 216.70, 52.30
+  ),
+  Incremental_Valuation_Millions = c(
+    3.60, 311.30, 81.00, 20.50, 81.30, 165.70, 407.80, 913.10, 684.50, 388.90,
+    384.90, 884.80, 801.30, 213.60, 48.30, 172.60, 154.90, 160.50, 492.20, 491.10,
+    136.40, 518.10, 227.60, 204.10, 138.00, 393.50, 379.20, 440.40, 308.90, 243.10,
+    190.80, 526.20, 432.30, 366.00, 518.40, 510.70, 531.30, 756.90, 364.60, 131.90, 2.40
+  ),
+  TIF_Estimated_Revenues_Millions = c(
+    0.10, 11.70, 2.50, 0.50, 2.60, 5.30, 12.90, 26.90, 19.90, 11.10,
+    11.20, 28.10, 23.10, 6.10, 1.40, 4.20, 4.40, 5.30, 15.30, 14.80,
+    3.60, 14.90, 6.20, 6.10, 4.00, 10.20, 10.10, 9.60, 7.70, 6.00,
+    5.60, 13.80, 11.60, 11.10, 14.90, 15.10, 13.00, 20.00, 9.00, 2.10, 0.02
+  )
+)
+
+# View the table
+print(tif_table)
+```
+
+    ## # A tibble: 41 × 5
+    ##    Base_Year Count Frozen_Base_Valuation_Millions Incremental_Valuation_Millions
+    ##    <chr>     <dbl>                          <dbl>                          <dbl>
+    ##  1 1981          1                            1.8                            3.6
+    ##  2 1982          3                          123                            311. 
+    ##  3 1983          4                           42.4                           81  
+    ##  4 1984          3                           20.2                           20.5
+    ##  5 1985         10                           57.3                           81.3
+    ##  6 1986         11                           40.9                          166. 
+    ##  7 1987         22                          259.                           408. 
+    ##  8 1988         37                          447.                           913. 
+    ##  9 1989         40                          271.                           684. 
+    ## 10 1990         40                          328.                           389. 
+    ## # ℹ 31 more rows
+    ## # ℹ 1 more variable: TIF_Estimated_Revenues_Millions <dbl>
+
+``` r
+# Optional: View as an interactive spreadsheet in RStudio
+#View(tif_table)
+```
+
+``` r
 # Load necessary libraries
 library(ggplot2)
 library(dplyr)
@@ -157,4 +218,4 @@ ggplot(tif_data, aes(x = Year)) +
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
