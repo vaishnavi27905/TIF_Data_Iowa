@@ -1,4 +1,4 @@
-### Summary:
+# Summary:
 
 Here we have all 6 data sets of Tax increment Finance and their
 comparisons with counties, TIF and School districts valuations etc… and
