@@ -102,7 +102,10 @@ ggplot(final_plot_data,
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-can you create the base year graph by compare with each year.
+## Based on Years
+
+I have created a table so that I can understand the table and we can
+make graphs based the given table.
 
 ``` r
 # Load the tidyverse library for data manipulation and clean tables
@@ -165,6 +168,8 @@ print(tif_table)
 #View(tif_table)
 ```
 
+can you create the base year graph by compare with each year.
+
 ``` r
 # Load necessary libraries
 library(ggplot2)
@@ -219,3 +224,90 @@ ggplot(tif_data, aes(x = Year)) +
     ## generated.
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+## School Districts with TIF
+
+``` r
+# Create the school district dataset
+tif_data <- data.frame(
+  Assessment_Year = 2001:2021,
+  
+  # School Districts without TIF
+  Count_No_TIF = c(110, 98, 100, 98, 108, 107, 99, 95, 93, 87, 82, 83, 76, 74, 76, 74, 72, 80, 78, 71, 63),
+  Valuation_No_TIF_Millions = c(12230.0, 10140.5, 9240.4, 10610.0, 12885.7, 12894.7, 12451.2, 12667.7, 11264.4, 11232.0, 
+                                11293.6, 11682.8, 12261.5, 12796.5, 14646.2, 13175.6, 14589.7, 16036.0, 16680.3, 15456.7, 14186.8),
+  
+  # School Districts with TIF
+  Count_With_TIF = c(260, 272, 267, 267, 257, 257, 263, 266, 266, 264, 266, 263, 262, 262, 257, 259, 258, 256, 258, 261, 264),
+  TIF_Specific_Valuation_Millions = c(5227.3, 5353.6, 5988.2, 5950.1, 6864.5, 7287.9, 7987.0, 8352.0, 8493.9, 8669.5, 
+                                      9228.7, 9512.1, 10272.3, 10275.0, 10830.2, 11019.2, 11398.9, 11740.0, 12967.1, 13882.5, 14663.0),
+  Total_Valuation_With_TIF_Districts = c(92202.8, 96859.1, 95417.4, 96126.9, 99694.4, 102601.9, 110052.2, 115806.9, 122624.4, 128146.7, 
+                                         133436.3, 138700.7, 141823.3, 144536.4, 149721.7, 157557.9, 164681.6, 199418.7, 193060.6, 202224.4, 213226.5),
+  
+  # Aggregate Totals
+  Total_Revenues_Millions = c(1219.9, 1264.7, 1289.3, 1323.3, 1394.2, 1443.5, 1530.2, 1621.9, 1754.4, 1803.0, 
+                              1787.1, 1679.2, 1679.8, 1709.1, 1774.6, 1836.8, 1899.8, 2081.2, 2150.5, 2187.3, 2218.7)
+)
+
+# --- COMMAND TO VIEW IN RSTUDIO ---
+view(tif_data)
+```
+
+``` r
+# Load libraries
+library(ggplot2)
+library(dplyr)
+
+# 1. Prepare Data
+data <- data.frame(
+  Year = 2001:2021,
+  Count_No_TIF = c(110, 98, 100, 98, 108, 107, 99, 95, 93, 87, 82, 83, 76, 74, 76, 74, 72, 80, 78, 71, 63),
+  Count_With_TIF = c(260, 272, 267, 267, 257, 257, 263, 266, 266, 264, 266, 263, 262, 262, 257, 259, 258, 256, 258, 261, 264),
+  Val_No_TIF = c(12230.0, 10140.5, 9240.4, 10610.0, 12885.7, 12894.7, 12451.2, 12667.7, 11264.4, 11232.0, 
+                 11293.6, 11682.8, 12261.5, 12796.5, 14646.2, 13175.6, 14589.7, 16036.0, 16680.3, 15456.7, 14186.8),
+  Val_With_TIF = c(92202.8, 96859.1, 95417.4, 96126.9, 99694.4, 102601.9, 110052.2, 115806.9, 122624.4, 128146.7, 
+                   133436.3, 138700.7, 141823.3, 144536.4, 149721.7, 157557.9, 164681.6, 199418.7, 193060.6, 202224.4, 213226.5)
+) %>%
+  mutate(Val_No_TIF_B = Val_No_TIF / 1000,
+         Val_With_TIF_B = Val_With_TIF / 1000)
+
+# --- GRAPH P1: DISTRICT COUNTS ---
+p1 <- ggplot(data) +
+  geom_line(aes(x = Year, y = Count_No_TIF, color = "Districts without TIF"), linewidth = 1) +
+  geom_point(aes(x = Year, y = Count_No_TIF, color = "Districts without TIF"), shape = 16, size = 3) +
+  geom_line(aes(x = Year, y = Count_With_TIF, color = "Districts with TIF"), linewidth = 1) +
+  geom_point(aes(x = Year, y = Count_With_TIF, color = "Districts with TIF"), shape = 15, size = 3) +
+  scale_color_manual(values = c("Districts without TIF" = "#1f77b4", "Districts with TIF" = "#ff7f0e")) +
+  scale_x_continuous(breaks = seq(2001, 2021, 2)) +
+  labs(title = "Comparison of School Districts: Counts",
+       subtitle = "Comparing Districts with and without TIF (2001-2021)",
+       x = "Year", y = "Number of Districts") +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title = element_blank())
+
+# View them as graph below
+print(p1)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+``` r
+# --- GRAPH P2: TAXABLE VALUATION ---
+p2 <- ggplot(data) +
+  geom_line(aes(x = Year, y = Val_No_TIF_B, color = "Without TIF"), linetype = "dashed", linewidth = 1) +
+  geom_point(aes(x = Year, y = Val_No_TIF_B, color = "Without TIF"), shape = 16, size = 3) +
+  geom_line(aes(x = Year, y = Val_With_TIF_B, color = "With TIF"), linetype = "dashed", linewidth = 1) +
+  geom_point(aes(x = Year, y = Val_With_TIF_B, color = "With TIF"), shape = 15, size = 3) +
+  scale_color_manual(values = c("Without TIF" = "#1f77b4", "With TIF" = "#ff7f0e")) +
+  scale_x_continuous(breaks = seq(2001, 2021, 2)) +
+  labs(title = "Comparison of School Districts: Taxable Valuation",
+       subtitle = "Values in Billions of Dollars",
+       x = "Year", y = "Valuation ($ Billions)") +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title = element_blank())
+
+# View them as graph below
+print(p2)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
