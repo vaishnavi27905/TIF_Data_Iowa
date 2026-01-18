@@ -8,6 +8,10 @@ output:
 output_file: "README.md"
 ---
 
+### Summary: 
+Here we have all 6 data sets of Tax increment Finance and their comparisons with counties, TIF and School districts valuations etc...
+and I have done all the data sets in the TIF Iowa data and I have completed this project by taking reference by my previous class lectures and project.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
@@ -303,3 +307,5 @@ ggplot(df_long, aes(x = County, y = Value, fill = Metric)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "top")
 ```
+
+

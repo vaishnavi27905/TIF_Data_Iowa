@@ -1,3 +1,11 @@
+### Summary:
+
+Here we have all 6 data sets of Tax increment Finance and their
+comparisons with counties, TIF and School districts valuations etc… and
+I have done all the data sets in the TIF Iowa data and I have completed
+this project by taking reference by my previous class lectures and
+project.
+
 Here, I am using creating csv data file for the Tax increament finance
 (TIF)
 
