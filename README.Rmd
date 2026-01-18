@@ -243,3 +243,63 @@ p2 <- ggplot(data) +
 # View them as graph below
 print(p2)
 ```
+
+## Top 10 couties comparision
+
+```{r}
+# Creating the data frame with updated, distinct variable names
+tif_data <- data.frame(
+  region_name = c("Adair", "Adams", "Allamakee", "Appanoose", "Audubon", "Benton", "Black Hawk", "Boone", "Bremer", "Buchanan", "Buena Vista", "Butler", "Calhoun", "Carroll", "Cass", "Cedar", "Cerro Gordo", "Cherokee", "Chickasaw", "Clarke", "Clay", "Clayton", "Clinton", "Crawford", "Dallas", "Davis", "Decatur", "Delaware", "Des Moines", "Dickinson", "Dubuque", "Emmet", "Fayette", "Floyd", "Franklin", "Fremont", "Greene", "Grundy", "Guthrie", "Hamilton", "Hancock", "Hardin", "Harrison", "Henry", "Howard", "Humboldt", "Ida", "Iowa", "Jackson", "Jasper", "Jefferson", "Johnson", "Jones", "Keokuk", "Kossuth", "Lee", "Linn", "Louisa", "Lucas", "Lyon", "Madison", "Mahaska", "Marion", "Marshall", "Mills", "Mitchell", "Monona", "Monroe", "Montgomery", "Muscatine", "O'Brien", "Osceola", "Page", "Palo Alto", "Plymouth", "Pocahontas", "Polk", "Pottawattamie", "Poweshiek", "Ringgold", "Sac", "Scott", "Shelby", "Sioux", "Story", "Tama", "Taylor", "Union", "Van Buren", "Wapello", "Warren", "Washington", "Wayne", "Webster", "Winnebago", "Winneshiek", "Woodbury", "Worth", "Wright", "Total"),
+  tif_current_M = c(219.6, 1.4, 22.7, 21.7, 26.9, 42.4, 617.9, 42.7, 68.2, 15.5, 28.4, 91.9, 1.5, 81.3, 78.0, 32.4, 163.4, 9.9, 10.6, 17.4, 48.3, 43.4, 90.5, 7.4, 693.7, 0.2, 0.0, 71.8, 136.4, 221.0, 602.0, 4.2, 34.3, 86.3, 28.3, 0.0, 72.0, 29.4, 233.4, 20.1, 21.4, 48.4, 9.4, 24.1, 52.9, 32.1, 146.1, 48.9, 38.7, 108.2, 12.3, 963.8, 25.1, 3.9, 20.1, 38.1, 987.1, 1.1, 10.7, 68.7, 85.4, 44.9, 63.1, 15.2, 37.9, 258.2, 8.7, 0.0, 3.7, 118.1, 136.8, 35.8, 10.2, 52.3, 181.3, 3.0, 3473.2, 153.3, 134.4, 36.0, 6.3, 534.0, 50.7, 335.2, 299.8, 28.2, 1.7, 3.8, 0.0, 53.3, 544.5, 32.0, 0.0, 220.1, 120.5, 7.0, 579.9, 159.9, 145.3, 14651.4),
+  tif_limit_M = c(265.9, 1.4, 65.6, 35.9, 43.9, 96.8, 1023.3, 367.0, 175.5, 84.9, 28.4, 104.6, 1.5, 89.4, 211.7, 190.2, 467.6, 29.4, 19.4, 25.4, 246.8, 69.4, 238.6, 95.1, 1643.3, 20.6, 1.3, 259.4, 295.2, 655.7, 697.4, 15.7, 109.9, 164.7, 231.8, 24.5, 79.7, 113.7, 435.6, 95.1, 46.5, 52.8, 56.9, 328.4, 158.3, 97.4, 170.0, 86.3, 133.7, 193.9, 15.8, 1897.8, 62.2, 3.9, 118.3, 73.2, 3000.4, 1.1, 29.4, 125.2, 132.0, 297.5, 174.2, 0.0, 39.3, 285.1, 27.5, 161.3, 56.5, 225.4, 137.3, 78.7, 41.0, 155.4, 223.8, 36.3, 8485.6, 409.2, 308.1, 144.9, 6.3, 1297.9, 95.9, 415.2, 459.4, 50.8, 2.7, 9.3, 6.4, 216.2, 571.7, 103.0, 0.0, 230.2, 152.5, 7.6, 1377.1, 213.1, 175.4, 32282.8),
+  taxable_val_M = c(46.2, 0.0, 43.0, 14.2, 17.0, 54.4, 405.4, 324.3, 97.1, 69.3, 0.0, 12.7, 0.0, 8.1, 133.7, 157.8, 305.2, 19.6, 8.7, 8.0, 198.4, 26.0, 148.1, 87.7, 947.3, 20.4, 0.0, 187.6, 158.8, 434.7, 95.4, 11.5, 75.6, 78.4, 203.6, 24.5, 7.7, 84.3, 202.1, 75.0, 25.1, 4.4, 47.4, 304.3, 105.4, 65.4, 14.3, 37.4, 95.0, 85.6, 3.5, 919.8, 37.1, 0.0, 98.2, 35.1, 2013.3, 0.0, 18.7, 56.5, 46.6, 252.6, 111.2, 0.0, 1.4, 25.0, 18.8, 161.3, 52.9, 107.3, 0.5, 42.9, 30.9, 102.2, 41.4, 33.3, 5002.2, 255.9, 174.1, 109.0, 0.0, 764.7, 45.2, 80.0, 159.6, 23.0, 1.0, 5.5, 6.4, 162.8, 27.3, 71.0, 0.0, 2.7, 14.0, 0.6, 797.2, 53.2, 30.1, 17572.2),
+  utilization_pct = c(82.6, 100.0, 34.6, 60.3, 61.2, 43.8, 60.4, 11.6, 38.8, 18.3, 100.0, 87.8, 100.0, 91.0, 36.9, 17.0, 35.0, 33.5, 55.0, 68.4, 19.6, 62.5, 37.9, 7.8, 42.2, 0.9, 100.0, 27.7, 46.2, 33.7, 86.3, 27.0, 31.2, 52.4, 12.2, 0.0, 90.4, 25.9, 53.6, 21.1, 46.1, 91.6, 16.6, 7.3, 33.4, 33.0, 86.0, 56.7, 29.0, 55.8, 77.7, 50.8, 40.3, 100.0, 17.0, 52.0, 32.9, 100.0, 36.5, 54.9, 64.7, 15.1, 36.2, 0.0, 96.4, 90.6, 31.6, 0.0, 6.5, 52.4, 99.7, 45.5, 24.8, 33.6, 81.0, 8.3, 40.9, 37.5, 43.6, 24.8, 100.0, 41.1, 52.9, 80.7, 65.3, 55.6, 64.2, 40.7, 0.0, 24.7, 95.2, 31.1, 0.0, 95.6, 79.0, 92.0, 42.1, 75.1, 82.8, 45.4),
+  val_share_pct = c(27.3, 0.4, 2.6, 4.1, 5.0, 2.5, 9.6, 2.4, 5.0, 1.2, 2.1, 8.7, 0.2, 4.8, 6.6, 2.3, 5.4, 1.0, 1.1, 3.0, 3.9, 3.7, 3.6, 0.6, 8.7, 0.0, 0.4, 4.9, 7.5, 6.5, 10.3, 0.7, 2.7, 8.4, 2.8, 0.0, 8.3, 2.6, 20.9, 1.7, 2.1, 4.2, 0.8, 2.5, 6.9, 3.8, 18.1, 4.2, 3.2, 5.4, 1.3, 9.4, 2.0, 0.5, 1.3, 2.5, 7.6, 0.2, 2.7, 5.7, 7.7, 3.8, 3.3, 0.8, 3.3, 24.9, 1.0, 0.0, 0.6, 5.3, 9.5, 5.7, 1.3, 6.4, 8.5, 0.3, 11.0, 2.7, 8.6, 8.1, 0.7, 5.2, 5.1, 13.2, 5.2, 2.4, 0.4, 0.7, 0.0, 3.9, 17.7, 2.3, 0.0, 9.9, 15.6, 0.5, 10.8, 19.2, 13.3, 7.1),
+  cap_share_pct = c(33.0, 0.4, 7.6, 6.8, 8.2, 5.8, 15.9, 20.3, 12.7, 6.4, 2.1, 9.9, 0.2, 5.2, 17.9, 13.4, 15.4, 2.9, 2.1, 4.3, 20.1, 5.9, 9.6, 7.5, 20.6, 4.7, 0.4, 17.8, 16.1, 19.2, 11.9, 2.4, 8.6, 16.0, 23.3, 3.9, 9.2, 10.1, 38.9, 8.2, 4.5, 4.6, 5.0, 33.8, 20.7, 11.6, 21.1, 7.5, 11.0, 9.7, 1.6, 18.6, 5.0, 0.5, 7.7, 4.8, 23.0, 0.2, 7.4, 10.5, 11.8, 24.9, 9.1, 0.0, 3.5, 27.5, 3.1, 29.0, 9.0, 10.1, 9.5, 12.5, 5.2, 19.0, 10.5, 4.0, 26.9, 7.3, 19.8, 32.6, 0.7, 12.7, 9.6, 16.4, 7.9, 4.3, 0.7, 1.7, 1.4, 15.6, 18.6, 7.4, 0.0, 10.3, 19.7, 0.6, 25.6, 25.6, 16.1, 15.6)
+)
+
+# Opens the data frame in the RStudio data viewer
+View(tif_data)
+```
+
+BELOW IS THE GRAPH CODE AND WE LIBRARY I HAVE USED.
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+# 1. Create the dataset based on the provided data
+data <- data.frame(
+  County = factor(c("Polk", "Linn", "Johnson", "Dallas", "Black Hawk", 
+                    "Dubuque", "Woodbury", "Warren", "Scott", "Sioux"),
+                  levels = c("Polk", "Linn", "Johnson", "Dallas", "Black Hawk", 
+                             "Dubuque", "Woodbury", "Warren", "Scott", "Sioux")),
+  TIF_Increment = c(3473.20, 987.10, 963.80, 693.70, 617.90, 602.00, 579.90, 544.50, 534.00, 335.20),
+  TIF_Max_Increment = c(8485.60, 3000.40, 1897.80, 1643.30, 1023.30, 697.40, 1377.10, 571.70, 1297.90, 415.20),
+  Total_Net_Taxable_Val = c(5002.20, 2013.30, 919.80, 947.30, 405.40, 95.40, 797.20, 27.30, 764.70, 80.00)
+)
+
+# 2. Reshape the data for plotting (Convert from wide to long format)
+df_long <- data %>%
+  pivot_longer(cols = -County, 
+               names_to = "Metric", 
+               values_to = "Value")
+
+# 3. Create the bar chart
+ggplot(df_long, aes(x = County, y = Value, fill = Metric)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  # Use colors similar to the provided image
+  scale_fill_manual(values = c("TIF_Increment" = "#0D56D1", 
+                               "TIF_Max_Increment" = "#E38C05", 
+                               "Total_Net_Taxable_Val" = "#00A676"),
+                    labels = c("TIF Increment ($M)", "TIF Max Increment ($M)", "Total Net Taxable Val ($M)")) +
+  labs(title = "Top 10 Counties by TIF Increment - Financial Scale",
+       y = "Value ($ Millions)",
+       x = NULL,
+       fill = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "top")
+```
