@@ -309,3 +309,65 @@ ggplot(df_long, aes(x = County, y = Value, fill = Metric)) +
 ```
 
 
+## Urban vs. Rural TIF Increments
+
+A structured dataset containing urban and rural TIF data for 99 counties. It then opens an interactive table viewer and generates a statistical summary of the values.
+
+```{r}
+# 1. Recreate the full dataset directly in R
+tif_data <- data.frame(
+  County = c("Adair", "Adams", "Allamakee", "Appanoose", "Audubon", "Benton", "Black Hawk", "Boone", "Bremer", "Buchanan", "Buena Vista", "Butler", "Calhoun", "Carroll", "Cass", "Cedar", "Cerro Gordo", "Cherokee", "Chickasaw", "Clarke", "Clay", "Clayton", "Clinton", "Crawford", "Dallas", "Davis", "Decatur", "Delaware", "Des Moines", "Dickinson", "Dubuque", "Emmet", "Fayette", "Floyd", "Franklin", "Fremont", "Greene", "Grundy", "Guthrie", "Hamilton", "Hancock", "Hardin", "Harrison", "Henry", "Howard", "Humboldt", "Ida", "Iowa", "Jackson", "Jasper", "Jefferson", "Johnson", "Jones", "Keokuk", "Kossuth", "Lee", "Linn", "Louisa", "Lucas", "Lyon", "Madison", "Mahaska", "Marion", "Marshall", "Mills", "Mitchell", "Monona", "Monroe", "Montgomery", "Muscatine", "O'Brien", "Osceola", "Page", "Palo Alto", "Plymouth", "Pocahontas", "Polk", "Pottawattamie", "Poweshiek", "Ringgold", "Sac", "Scott", "Shelby", "Sioux", "Story", "Tama", "Taylor", "Union", "Van Buren", "Wapello", "Warren", "Washington", "Wayne", "Webster", "Winnebago", "Winneshiek", "Woodbury", "Worth", "Wright"),
+  Urban_TIF_Increment = c(47.9, 0, 22.7, 0.3, 3.4, 42.4, 617.8, 24.8, 67.6, 15.5, 28.4, 24.6, 0.3, 81.3, 7.7, 32.4, 163.4, 4.3, 10.6, 17.4, 28.1, 7.2, 59, 13, 690.9, 1.2, 0, 24.1, 48, 14.8, 224, 7.4, 11, 4.3, 13.9, 0, 1.6, 1.3, 1.3, 20.2, 11, 28.2, 4.7, 10, 8.1, 12, 0, 3.2, 10.8, 48, 16.5, 963.8, 30.2, 2.9, 36.4, 30.1, 985.4, 3.3, 1.8, 2, 8.4, 5.7, 39, 15.2, 37.9, 258.2, 8.7, 0, 3.7, 118.1, 136.8, 35.8, 10.2, 52.3, 181.3, 3, 3382.6, 153.3, 94.7, 4.7, 6.3, 534, 41.9, 312.7, 245.5, 5, 2.6, 15.8, 0, 32.7, 135.5, 14.4, 1.9, 132.8, 18.5, 7, 519.2, 24.7, 25.6),
+  Urban_TIF_Max_Increment = c(51.2, 0, 65.6, 0.3, 3.4, 96.8, 1023.2, 331.6, 174.9, 15.5, 28.4, 74, 0.3, 146.4, 7.7, 72.5, 335.5, 12.8, 10.6, 32.9, 56, 7.2, 156.4, 13, 1152.1, 1.2, 0, 35, 149.6, 33, 444.6, 13.4, 16, 4.3, 45.4, 0, 1.6, 32.6, 1.3, 30.6, 12.2, 125.7, 4.7, 24.5, 20.7, 40.8, 0, 14, 57.5, 129, 34, 2587.4, 33.7, 10.4, 74.3, 113.8, 1812.2, 3.3, 1.8, 10.3, 8.4, 13.5, 154.5, 15.2, 39.3, 285.1, 27.5, 0, 56.5, 225.4, 137.3, 78.7, 41, 155.4, 181.3, 3, 4833.6, 153.3, 198.4, 10.7, 6.3, 1297.9, 87.1, 392.1, 515.6, 25, 2.2, 15.8, 0, 41.7, 341.6, 43, 22.8, 237, 23, 7, 856.9, 24.7, 25.6),
+  Rural_TIF_Increment = c(171.7, 1.4, 0, 21.4, 23.5, 0, 0.1, 17.9, 0.6, 0, 0, 67.3, 1.2, 0, 70.4, 0, 0, 5.5, 0, 0, 1.8, 13, 0.1, 0, 2.8, 0.2, 1.9, 0, 0, 15.2, 5, 4.9, 1, 31.9, 23, 20.3, 16, 16.3, 5, 0.2, 0.5, 12, 10.6, 0, 1.1, 32.7, 37.4, 11.2, 0, 61.5, 12, 0, 0, 4.7, 12.1, 62.9, 1.7, 21.3, 1, 57.3, 14.4, 0, 15.4, 0, 1.4, 25, 18.8, 161.3, 52.9, 107.3, 0.5, 42.9, 30.9, 102.2, 0, 0, 90.6, 409.2, 198.4, 10.7, 6.3, 1297.9, 87.1, 392.1, 54.4, 25, 2.2, 1.1, 1.1, 4.6, 43, 22.8, 14.7, 131, 11, 60.8, 135.2, 119.7, 16.3)
+)
+
+# 2. Open the built-in R Viewer to see the table
+View(tif_data)
+
+# Optional: Print summary to console
+summary(tif_data)
+```
+
+ggplot2 library to generate a log-scaled scatter plot comparing urban and rural TIF increments across selected counties. It includes a parity line to visually distinguish whether a county’s tax increment financing is predominantly rural or urban.
+
+```{r}
+# Load necessary library
+library(ggplot2)
+library(scales)
+
+# 1. Create the dataset based on the provided images (Top 15 sample for demonstration)
+# In your full script, you would read the full CSV or Excel file.
+tif_data <- data.frame(
+  County = c("Adair", "Adams", "Allamakee", "Appanoose", "Audubon", "Black Hawk", 
+             "Dallas", "Johnson", "Linn", "Polk", "Scott", "Story", "Woodbury", "Worth"),
+  Urban_TIF = c(47.9, 0, 22.7, 0.3, 3.4, 617.8, 690.9, 963.8, 985.4, 3382.6, 534.0, 245.5, 519.2, 24.7),
+  Rural_TIF = c(171.7, 1.4, 0, 21.4, 23.5, 0.1, 2.8, 0, 1.7, 90.6, 0, 54.4, 135.2, 119.7)
+)
+
+# 2. Add a tiny amount to 0s to allow for Log Scale plotting
+tif_data$Urban_Plot <- tif_data$Urban_TIF + 0.1
+tif_data$Rural_Plot <- tif_data$Rural_TIF + 0.1
+
+# 3. Create the Scatter Plot
+ggplot(tif_data, aes(x = Urban_Plot, y = Rural_Plot)) +
+  # Add a 1:1 parity line
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red", alpha = 0.5) +
+  # Add the points
+  geom_point(size = 3, color = "#2c3e50", alpha = 0.7) +
+  # Add labels for specific high-value counties
+  geom_text(aes(label = County), vjust = -1, size = 3, check_overlap = TRUE) +
+  # Logarithmic scales to handle the wide range of Iowa county valuations
+  scale_x_log10(labels = comma) +
+  scale_y_log10(labels = comma) +
+  # Styling
+  labs(
+    title = "Urban vs. Rural TIF Increments by County",
+    subtitle = "Points above the red line favor Rural TIF; points below favor Urban TIF",
+    x = "Urban TIF Increment ($ Millions) - Log Scale",
+    y = "Rural TIF Increment ($ Millions) - Log Scale",
+    caption = "Source: Iowa Department of Management Property Valuation System"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+```
