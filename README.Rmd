@@ -371,3 +371,54 @@ ggplot(tif_data, aes(x = Urban_Plot, y = Rural_Plot)) +
   theme_minimal() +
   theme(panel.grid.minor = element_blank())
 ```
+
+## Top 10 sample dataset from the dataset of counties that TIF Increment valuation with and without
+
+Data Preparation: You built a small table (data frame) containing the names of 10 counties and their specific financial values for 2021.
+
+Sorting: You reordered the list of counties so that when they are graphed, they appear in order of their value (from highest to lowest) rather than alphabetically. 
+
+Visualization (The "Engine"): Using ggplot2, you created a horizontal bar chart where the length of each bar represents the dollar amount for that county. 
+
+Polishing: You added labels (like "$3473.2M") directly onto the bars, gave the chart clear titles, and used a clean, "minimal" theme to make it look professional and easy to read.
+
+```{r}
+# Load necessary library
+library(ggplot2)
+library(dplyr)
+
+# 1. Create the dataset based on your images (Top 10 sample)
+data <- data.frame(
+  County = c("Polk", "Johnson", "Linn", "Dallas", "Black Hawk", 
+             "Dubuque", "Woodbury", "Warren", "Scott", "Sioux"),
+  TIF_2021 = c(3473.2, 963.8, 987.1, 693.7, 617.9, 
+               602.0, 579.9, 544.5, 534.0, 335.2)
+)
+
+# 2. Reorder County factor levels so the bars are sorted by value
+data <- data %>%
+  arrange(TIF_2021) %>%
+  mutate(County = factor(County, levels = County))
+
+# 3. Create the bar chart
+tif_plot <- ggplot(data, aes(x = County, y = TIF_2021)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0("$", TIF_2021, "M")), 
+            hjust = -0.1, size = 3.5) + # Add value labels
+  coord_flip() + # Flip for better readability of names
+  labs(
+    title = "Top 10 Counties by TIF Increment Valuation (2021)",
+    subtitle = "Values shown in Millions of Dollars",
+    x = "County",
+    y = "Valuation ($ Millions)",
+    caption = "Source: TIF Increment Valuations Data"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+
+# 4. Display the plot
+print(tif_plot)
+```
